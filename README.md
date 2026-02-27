@@ -22,11 +22,9 @@ Al usar Inteligencia Artificial (como GitHub Copilot), la calidad del código ge
 
 ## Resultado final (MVP)
 
-Una API .NET funcional que soporta:
-- Consultar cuentas (mock/in-memory)  
-- Consultar movimientos por cuenta  
+Una API .NET funcional y minimalista que soporta:
+- Consultar saldo de una cuenta (mock/in-memory)  
 - Transferencias entre cuentas (simulado)  
-- Auditoría básica (logging estructurado + correlation id)  
 - Swagger/OpenAPI habilitado  
 
 **Restricciones del laboratorio (Sin base de datos):**
@@ -246,23 +244,21 @@ IMPORTANTE — IDIOMA:
 - Mantén el código fuente en inglés.
 - Mantén nombres técnicos en inglés (clases, métodos, endpoints).
 
-Crea la especificación funcional (spec.md) de una Banking REST API.
+Crea la especificación funcional (spec.md) de una Banking REST API minimalista.
 
-El sistema debe permitir:
-- Consultar el saldo y detalle de cuentas.
-- Consultar el historial de movimientos de una cuenta.
-- Transferir dinero entre cuentas.
+El sistema debe permitir SOLO 2 operaciones:
+1. Consultar el saldo actual de una cuenta específica.
+2. Transferir dinero entre dos cuentas.
 
 Reglas de negocio estrictas:
-- No permitir transferencias si el saldo es insuficiente.
+- No permitir transferencias si la cuenta origen no tiene saldo suficiente.
 - No permitir montos negativos o en cero.
 - No permitir transferir a la misma cuenta.
-- Toda transferencia exitosa debe generar un registro de auditoría (movimiento).
 
 Restricciones del laboratorio:
-- API REST.
+- API REST muy simple (MVP).
 - Sin base de datos (almacenamiento en memoria).
-- Datos semilla (seed data) al iniciar la aplicación para poder probar.
+- Datos semilla (seed data) al iniciar la aplicación con al menos 3 cuentas pre-cargadas (ej. ACC-001 con $1000, ACC-002 con $500, ACC-003 con $0) para poder probar inmediatamente.
 ```
 
 ---
@@ -286,13 +282,12 @@ IMPORTANTE — IDIOMA:
 
 Basado en la especificación anterior, crea el plan técnico (plan.md) para la Banking REST API.
 
-Restricciones técnicas:
-- .NET 8 Web API con ASP.NET Core.
-- SIN BASE DE DATOS: Usar un patrón Repository en memoria (ej. usando ConcurrentDictionary para thread-safety).
-- Arquitectura limpia: Separar Controllers, Services (lógica de negocio) y Repositories.
+Restricciones técnicas para acelerar el desarrollo:
+- .NET 8 Web API con ASP.NET Core (Minimal APIs o Controllers simples).
+- SIN BASE DE DATOS: Usar un servicio Singleton en memoria con un `ConcurrentDictionary` para almacenar los saldos.
+- Arquitectura simplificada: Un solo proyecto (sin múltiples capas físicas) separando lógicamente en carpetas (Models, Services, Controllers).
 - Swagger habilitado.
-- Logging estructurado.
-- Pruebas unitarias con xUnit.
+- Pruebas unitarias básicas con xUnit solo para el servicio de transferencias.
 ```
 
 ---
@@ -315,7 +310,13 @@ IMPORTANTE — IDIOMA:
 - Mantén nombres técnicos en inglés (clases, métodos, endpoints).
 
 Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso para implementar la API. 
-Las tareas deben ser secuenciales, comenzando por la creación de la solución y el proyecto .NET, seguido de los modelos, repositorios, servicios y finalmente los controladores.
+Mantén el número de tareas al mínimo indispensable (máximo 5 tareas).
+Las tareas deben ser secuenciales:
+1. Crear proyecto Web API y xUnit.
+2. Crear modelos de datos (Account, TransferRequest).
+3. Crear el servicio en memoria con Seed Data (cuentas de prueba).
+4. Crear los endpoints (Controllers o Minimal APIs) para consultar saldo y transferir.
+5. Escribir pruebas unitarias para la lógica de transferencia.
 ```
 
 ---
@@ -360,14 +361,9 @@ http://localhost:5xxx/swagger
 
 # Pruebas con curl (Opcional si no usas Swagger)
 
-## Listar cuentas
+## Consultar saldo
 ```bash
-curl -k http://localhost:5xxx/api/accounts
-```
-
-## Consultar movimientos
-```bash
-curl -k http://localhost:5xxx/api/accounts/ACC-001/transactions
+curl -k http://localhost:5xxx/api/accounts/ACC-001
 ```
 
 ## Transferencia
@@ -377,8 +373,7 @@ curl -k -X POST http://localhost:5xxx/api/transfers \
   -d '{
     "fromAccountId": "ACC-001",
     "toAccountId": "ACC-002",
-    "amount": 50.00,
-    "currency": "USD"
+    "amount": 50.00
   }'
 ```
 
