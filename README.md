@@ -212,10 +212,15 @@ IMPORTANTE — IDIOMA:
 - Mantén el código fuente en inglés.
 - Mantén nombres técnicos en inglés (clases, métodos, endpoints).
 
+IMPORTANTE — ESTRUCTURA DEL PROYECTO:
+- Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
+- La estructura del proyecto debe ser: src/BankingApi/
+
 Actúa como un Arquitecto de Software. Crea la constitución (reglas globales) para una REST API bancaria empresarial en .NET.
 
 Debes incluir:
 - Política de Idioma: Todos los documentos generados deben estar en español. El código, clases, métodos y variables permanecen en inglés.
+- Estructura de Carpetas: Todo el código fuente debe ubicarse dentro de src/ en la raíz del proyecto.
 - Seguridad OWASP obligatoria.
 - Logging estructurado con Correlation ID para trazabilidad.
 - Validaciones estrictas en el dominio (ej. transferencias).
@@ -243,6 +248,10 @@ IMPORTANTE — IDIOMA:
 - Genera toda la documentación en español.
 - Mantén el código fuente en inglés.
 - Mantén nombres técnicos en inglés (clases, métodos, endpoints).
+
+IMPORTANTE — ESTRUCTURA DEL PROYECTO:
+- Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
+- La estructura del proyecto debe ser: src/BankingApi/
 
 Crea la especificación funcional (spec.md) de una Banking REST API minimalista.
 
@@ -280,10 +289,15 @@ IMPORTANTE — IDIOMA:
 - Mantén el código fuente en inglés.
 - Mantén nombres técnicos en inglés (clases, métodos, endpoints).
 
+IMPORTANTE — ESTRUCTURA DEL PROYECTO:
+- Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
+- La estructura del proyecto debe ser: src/BankingApi/
+
 Basado en la especificación anterior, crea el plan técnico (plan.md) para la Banking REST API.
 
 Restricciones técnicas para acelerar el desarrollo:
 - .NET 8 Web API con ASP.NET Core (Minimal APIs o Controllers simples).
+- El proyecto debe crearse en la carpeta src/BankingApi/
 - SIN BASE DE DATOS: Usar un servicio Singleton en memoria con un `ConcurrentDictionary` para almacenar los saldos.
 - Arquitectura simplificada: Un solo proyecto (sin múltiples capas físicas) separando lógicamente en carpetas (Models, Services, Controllers).
 - Swagger habilitado.
