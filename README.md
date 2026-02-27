@@ -1,1 +1,363 @@
-# taller-speckit
+# Workshop Hands-On Lab (3 horas)
+## GitHub Spec Kit + GitHub Copilot
+### Desarrollo de una REST API Bancaria en .NET (sin base de datos)
+
+> Laboratorio público: **NO usar datos reales, credenciales ni información sensible**
+
+---
+
+# 1. Objetivo del workshop
+
+Aprender a aplicar **Spec-Driven Development** usando GitHub Spec Kit y GitHub Copilot para construir una REST API bancaria en .NET de forma estructurada. Pasaremos de los requerimientos en lenguaje natural a código funcional, guiando a la Inteligencia Artificial paso a paso.
+
+## ¿Por qué es importante especificar? (Spec-Driven Development)
+En el desarrollo tradicional, saltar directamente a escribir código suele generar desalineación entre el negocio y la tecnología, resultando en bugs y retrabajos costosos. 
+Al usar Inteligencia Artificial (como GitHub Copilot), la calidad del código generado depende **directamente** de la calidad del contexto proporcionado. 
+
+**Especificar primero** nos permite:
+1. **Alinear expectativas:** Definir claramente el *Qué* antes del *Cómo*.
+2. **Dar contexto a la IA:** Copilot funciona mucho mejor cuando entiende las reglas de negocio, la arquitectura y las restricciones antes de escribir la primera línea de código.
+3. **Reducir deuda técnica:** Evitar refactorizaciones tempranas por malentendidos.
+4. **Documentación viva:** La especificación se convierte en la fuente de la verdad del proyecto.
+
+## Resultado final (MVP)
+
+Una API .NET funcional que soporta:
+- Consultar cuentas (mock/in-memory)  
+- Consultar movimientos por cuenta  
+- Transferencias entre cuentas (simulado)  
+- Auditoría básica (logging estructurado + correlation id)  
+- Swagger/OpenAPI habilitado  
+
+**Restricciones del laboratorio (Sin base de datos):**
+- Repositorio en memoria (usando colecciones concurrentes) con *seed data* (datos iniciales).
+- Sin dependencias externas (ni SQL, ni Redis).
+- Totalmente reproducible en cualquier máquina local.
+
+---
+
+# 2. Diagrama del flujo del laboratorio
+
+El siguiente diagrama ilustra el flujo de trabajo que seguiremos con Spec Kit:
+
+```mermaid
+flowchart TD
+  A([Setup del entorno]) --> B[specify init]
+  
+  subgraph Spec Kit Flow
+    B --> C[1. Constitución <br/> Reglas globales]
+    C --> D[2. Especificación <br/> Qué vamos a hacer]
+    D --> E[3. Plan Técnico <br/> Cómo lo vamos a hacer]
+    E --> F[4. Tareas <br/> Backlog paso a paso]
+    F --> G[5. Implementación <br/> Generación de código]
+  end
+  
+  G --> H([Ejecución: dotnet run])
+  H --> I([Validación: Swagger y curl])
+
+  classDef ai fill:#0d419d,stroke:#fff,stroke-width:2px,color:#fff;
+  class C,D,E,F,G ai;
+```
+
+---
+
+# 3. Agenda detallada (3 horas)
+
+| Tiempo | Actividad | Objetivo |
+|---:|---|---|
+| 0:00–0:15 | Introducción | Alinear el enfoque Spec-Driven Development y el escenario bancario. |
+| 0:15–0:35 | Setup + Inicialización | Tener el repositorio listo con Spec Kit y Copilot funcionando. |
+| 0:35–0:55 | Constitución | Definir reglas no negociables (seguridad, calidad, testing, auditoría). |
+| 0:55–1:20 | Especificación (Spec) | Definir QUÉ debe hacer la API (Reglas de negocio). |
+| 1:20–1:50 | Plan técnico (Plan) | Definir CÓMO implementarlo (Arquitectura en memoria). |
+| 1:50–2:10 | Backlog (Tasks) | Convertir el plan técnico en tareas accionables. |
+| 2:10–2:45 | Implementación | Generar, revisar y refinar el código con Copilot. |
+| 2:45–3:00 | Demo + Cierre | Ejecutar la API y probar los endpoints. |
+
+---
+
+# 4. Prerrequisitos
+
+## 4.1 Software requerido
+
+### 1. Git
+Descarga: https://git-scm.com/downloads  
+Validar: `git --version`
+
+### 2. .NET SDK 8
+Descarga: https://dotnet.microsoft.com/download  
+Validar: `dotnet --version`
+
+### 3. Visual Studio Code
+Descarga: https://code.visualstudio.com/
+Extensiones recomendadas:
+- GitHub Copilot  
+- GitHub Copilot Chat  
+- C# Dev Kit (o C#)  
+- Python (solo para la CLI de Spec Kit)  
+- Markdown Preview Mermaid Support (opcional)  
+
+### 4. Acceso a GitHub Copilot
+Debes tener:
+- Copilot activo y sesión iniciada en VS Code.
+- Copilot Chat funcionando.
+
+### 5. Python 3.11+ (solo para Spec Kit CLI)
+Descarga: https://www.python.org/downloads/  
+Validar: `python --version`
+
+### 6. Instalar Spec Kit (Specify CLI)
+
+**Opción A — pip**
+```bash
+pip install specify-cli
+```
+
+**Opción B — uv (recomendada)**
+UV: https://github.com/astral-sh/uv
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
+
+Validar:
+```bash
+specify --help
+```
+
+## 4.2 Checklist de “listo para iniciar”
+- [ ] Puedo ejecutar `specify --help`  
+- [ ] Copilot Chat abre correctamente en VS Code  
+- [ ] El repositorio está abierto en VS Code  
+
+---
+
+# 5. Estructura esperada del repositorio
+
+Al finalizar el laboratorio, tu proyecto se verá así:
+
+```text
+banking-speckit-dotnet-lab/
+├─ .specify/                 <-- Contexto global para Copilot
+├─ specs/
+│  └─ 001-banking-api/
+│     ├─ spec.md             <-- Requerimientos de negocio
+│     ├─ plan.md             <-- Arquitectura y diseño
+│     └─ tasks.md            <-- Backlog de implementación
+└─ src/
+   └─ BankingApi/            <-- Código fuente .NET
+```
+
+---
+
+# 6. Reglas del laboratorio
+
+✔ Usar datos ficticios (Seed data).  
+✔ No subir secretos ni tokens.  
+✔ No usar bases de datos reales (todo en memoria).  
+✔ Mantener el código limpio y seguir las sugerencias de la IA con criterio crítico.  
+
+---
+
+# Parte 1 — Inicialización del proyecto (0:15–0:35)
+
+## Paso 1. Crear carpeta
+```bash
+mkdir banking-speckit-dotnet-lab
+cd banking-speckit-dotnet-lab
+```
+
+## Paso 2. Inicializar Spec Kit
+```bash
+specify init . --ai copilot
+```
+*Nota: Esto crea las carpetas `.specify/` y `specs/`, configurando las instrucciones base para que Copilot entienda que estamos usando Spec-Driven Development.*
+
+## Paso 3. Inicializar Git y abrir VS Code
+```bash
+git init
+code .
+```
+
+---
+
+# Parte 2 — Crear la Constitución (0:35–0:55)
+
+**¿Qué es?** La constitución define las reglas de juego globales. Es el documento que Copilot leerá para saber qué estándares de código, arquitectura y seguridad debe respetar en todo momento.
+
+En Copilot Chat, pide que genere la constitución (puedes usar el comando o prompt configurado en tu entorno, por ejemplo `/speckit.constitution` o simplemente pegando el prompt):
+
+### Prompt sugerido:
+```text
+Actúa como un Arquitecto de Software. Crea la constitución (reglas globales) para una REST API bancaria empresarial en .NET.
+
+Debes incluir:
+- Seguridad OWASP obligatoria.
+- Logging estructurado con Correlation ID para trazabilidad.
+- Validaciones estrictas en el dominio (ej. transferencias).
+- Estándares de código C# (Clean Code, SOLID).
+- Pruebas unitarias obligatorias.
+- Swagger habilitado para documentación.
+- Definition of Done (DoD) clara.
+```
+
+**Verificación:** Guarda el resultado en `.specify/memory/constitution.md`.
+
+---
+
+# Parte 3 — Crear la Especificación (0:55–1:20)
+
+**¿Qué es?** Traduce los requerimientos del negocio a un formato estructurado. Aquí no hablamos de código, sino de casos de uso y reglas de negocio.
+
+### Prompt sugerido:
+```text
+Crea la especificación funcional (spec.md) de una Banking REST API.
+
+El sistema debe permitir:
+- Consultar el saldo y detalle de cuentas.
+- Consultar el historial de movimientos de una cuenta.
+- Transferir dinero entre cuentas.
+
+Reglas de negocio estrictas:
+- No permitir transferencias si el saldo es insuficiente.
+- No permitir montos negativos o en cero.
+- No permitir transferir a la misma cuenta.
+- Toda transferencia exitosa debe generar un registro de auditoría (movimiento).
+
+Restricciones del laboratorio:
+- API REST.
+- Sin base de datos (almacenamiento en memoria).
+- Datos semilla (seed data) al iniciar la aplicación para poder probar.
+```
+
+**Verificación:** Guarda el resultado en `specs/001-banking-api/spec.md`.
+
+---
+
+# Parte 4 — Generar el Plan Técnico (1:20–1:50)
+
+**¿Qué es?** Traduce la especificación a decisiones técnicas (arquitectura, patrones, frameworks). Le dice a Copilot *cómo* construirlo.
+
+### Prompt sugerido:
+```text
+Basado en la especificación anterior, crea el plan técnico (plan.md) para la Banking REST API.
+
+Restricciones técnicas:
+- .NET 8 Web API con ASP.NET Core.
+- SIN BASE DE DATOS: Usar un patrón Repository en memoria (ej. usando ConcurrentDictionary para thread-safety).
+- Arquitectura limpia: Separar Controllers, Services (lógica de negocio) y Repositories.
+- Swagger habilitado.
+- Logging estructurado.
+- Pruebas unitarias con xUnit.
+```
+
+**Verificación:** Guarda el resultado en `specs/001-banking-api/plan.md`.
+
+---
+
+# Parte 5 — Generar Tasks (1:50–2:10)
+
+**¿Qué es?** Divide el plan técnico en pasos accionables y pequeños. Esto evita que la IA se abrume y cometa errores al intentar generar todo el proyecto de una vez.
+
+### Prompt sugerido:
+```text
+Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso para implementar la API. 
+Las tareas deben ser secuenciales, comenzando por la creación de la solución y el proyecto .NET, seguido de los modelos, repositorios, servicios y finalmente los controladores.
+```
+
+**Verificación:** Guarda el resultado en `specs/001-banking-api/tasks.md`.
+
+---
+
+# Parte 6 — Implementación con Copilot (2:10–2:45)
+
+**¿Qué es?** El momento de codificar. Iremos tomando tarea por tarea del `tasks.md` y le pediremos a Copilot Chat que genere el código.
+
+### Flujo de trabajo:
+1. Selecciona la Tarea 1 (ej. "Crear proyecto .NET").
+2. Pide a Copilot: `@workspace Implementa la Tarea 1 del archivo tasks.md respetando la constitución y el plan técnico.`
+3. Revisa el código generado, aplícalo y verifica que compile.
+4. Repite para las siguientes tareas (Modelos, Repositorio en memoria, Servicios, Controladores).
+
+*Tip: Asegúrate de que Copilot genere el "Seed Data" en el repositorio en memoria para tener cuentas con saldo inicial (ej. ACC-001 con $1000).*
+
+---
+
+# Parte 7 — Ejecutar la API (2:45–3:00)
+
+## Restaurar y compilar
+```bash
+cd src/BankingApi
+dotnet restore
+dotnet build
+```
+
+## Ejecutar
+```bash
+dotnet run
+```
+
+## Abrir Swagger
+Abre tu navegador en la URL que indique la consola, agregando `/swagger`:
+```
+http://localhost:5xxx/swagger
+```
+
+---
+
+# Pruebas con curl (Opcional si no usas Swagger)
+
+## Listar cuentas
+```bash
+curl -k http://localhost:5xxx/api/accounts
+```
+
+## Consultar movimientos
+```bash
+curl -k http://localhost:5xxx/api/accounts/ACC-001/transactions
+```
+
+## Transferencia
+```bash
+curl -k -X POST http://localhost:5xxx/api/transfers \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fromAccountId": "ACC-001",
+    "toAccountId": "ACC-002",
+    "amount": 50.00,
+    "currency": "USD"
+  }'
+```
+
+---
+
+# Buenas prácticas aplicadas
+
+Este laboratorio demuestra el valor de:
+- **Spec-Driven Development:** La IA programa mejor cuando le damos contexto claro.
+- **Clean Architecture:** Separación de responsabilidades.
+- **Validaciones de dominio:** Reglas de negocio protegidas.
+- **Diseño cloud-ready:** Listo para evolucionar.
+
+# Siguientes pasos recomendados
+
+Para llevar este MVP a un entorno productivo real:
+- Autenticación JWT / OAuth2.
+- Persistencia real (SQL Server, PostgreSQL).
+- Observabilidad avanzada (OpenTelemetry, Application Insights).
+- CI/CD con GitHub Actions.
+- Idempotencia en transferencias para evitar duplicidad.
+
+---
+
+# Troubleshooting
+
+- **Copilot no genera .NET correctamente:** Asegúrate de mencionar explícitamente `.NET 8 ASP.NET Core Web API` en tus prompts.
+- **Errores de concurrencia:** Al no usar base de datos, asegúrate de que el repositorio en memoria use colecciones seguras para hilos (`ConcurrentDictionary`).
+- **Errores SSL en curl:** Usa la bandera `-k` para ignorar advertencias de certificados locales, o usa la URL `http` en lugar de `https`.
+
+---
+
+**Autor:** Armando Blanco  
+**Duración:** 3 horas  
+**Nivel:** Intermedio  
+**Modalidad:** Hands-On Lab público  
