@@ -57,6 +57,19 @@ flowchart TD
   class C,D,E,F,G ai;
 ```
 
+## Comandos de Spec Kit en orden
+
+| Paso | Comando | Propósito |
+|---:|---|---|
+| 1 | `specify init . --ai copilot` | Inicializar el repositorio con Spec Kit y configurar para GitHub Copilot |
+| 2 | `/speckit.constitution` | Crear la constitución del proyecto (reglas globales y estándares) |
+| 3 | `/speckit.specify` | Generar la especificación funcional (QUÉ debe hacer el sistema) |
+| 4 | `/speckit.plan` | Crear el plan técnico (CÓMO se implementará la solución) |
+| 5 | `/speckit.tasks` | Generar el backlog de tareas accionables paso a paso |
+| 6 | `/speckit.implement` | Implementar el código basado en las especificaciones y tareas |
+
+*Nota: Los comandos `/speckit.*` se ejecutan en el chat de GitHub Copilot dentro de VS Code.*
+
 ---
 
 # 3. Agenda detallada (3 horas)
