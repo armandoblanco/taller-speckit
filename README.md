@@ -137,6 +137,8 @@ Al finalizar el laboratorio, tu proyecto se verá así:
 
 ```text
 banking-speckit-dotnet-lab/
+├─ .github/
+│  └─ copilot-instructions.md <-- Instrucciones personalizadas (Español)
 ├─ .specify/                 <-- Contexto global para Copilot
 ├─ specs/
 │  └─ 001-banking-api/
@@ -178,13 +180,28 @@ git init
 code .
 ```
 
+## Paso 4. Configurar Copilot en Español (Custom Instructions)
+Para asegurar que todo el código, comentarios y documentación generada por Copilot sea estrictamente en español, crearemos un archivo de instrucciones personalizadas.
+
+```bash
+mkdir .github
+echo "Responde siempre en español. Genera toda la documentación, comentarios de código y explicaciones en español. Usa estándares profesionales." > .github/copilot-instructions.md
+```
+*Nota: VS Code y Copilot leerán automáticamente este archivo para ajustar su comportamiento en todo el workspace.*
+
 ---
 
 # Parte 2 — Crear la Constitución (0:35–0:55)
 
 **¿Qué es?** La constitución define las reglas de juego globales. Es el documento que Copilot leerá para saber qué estándares de código, arquitectura y seguridad debe respetar en todo momento.
 
-En Copilot Chat, pide que genere la constitución (puedes usar el comando o prompt configurado en tu entorno, por ejemplo `/speckit.constitution` o simplemente pegando el prompt):
+### Instrucciones en la interfaz de Copilot:
+1. Abre el panel de **GitHub Copilot Chat** en VS Code.
+2. En el selector de modelos (parte superior del chat), asegúrate de elegir **GPT-4o** o **Claude 3.5 Sonnet** para obtener el mejor razonamiento arquitectónico.
+3. Escribe el comando `/speckit.constitution` en la caja de texto.
+4. Pega el **Prompt sugerido** (abajo) y presiona **Enviar**.
+5. **Creación del archivo:** Copilot procesará la solicitud y te mostrará una vista previa de los cambios para el archivo `.specify/memory/constitution.md`. Haz clic en **"Apply in Editor"** (Aplicar en el editor) y luego guarda el archivo (`Ctrl+S` / `Cmd+S`).
+6. **Siguiente paso:** En la parte inferior de la respuesta de Copilot, verás un menú desplegable que dice **"PROCEED FROM SPECKIT.CONSTITUTION"**. Selecciona **"Build Specification"** para avanzar a la siguiente fase de forma fluida.
 
 ### Prompt sugerido:
 ```text
@@ -200,13 +217,17 @@ Debes incluir:
 - Definition of Done (DoD) clara.
 ```
 
-**Verificación:** Guarda el resultado en `.specify/memory/constitution.md`.
-
 ---
 
 # Parte 3 — Crear la Especificación (0:55–1:20)
 
 **¿Qué es?** Traduce los requerimientos del negocio a un formato estructurado. Aquí no hablamos de código, sino de casos de uso y reglas de negocio.
+
+### Instrucciones en la interfaz de Copilot:
+1. Si seleccionaste **"Build Specification"** en el paso anterior, el chat ya estará listo. Si no, escribe el comando `/speckit.specify`.
+2. Pega el **Prompt sugerido** y presiona **Enviar**.
+3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/spec.md`. Revisa el contenido, haz clic en **"Apply in Editor"** y guarda el archivo.
+4. **Siguiente paso:** En el menú desplegable **"PROCEED FROM SPECKIT.SPECIFY"**, selecciona **"Build Plan"**.
 
 ### Prompt sugerido:
 ```text
@@ -229,13 +250,17 @@ Restricciones del laboratorio:
 - Datos semilla (seed data) al iniciar la aplicación para poder probar.
 ```
 
-**Verificación:** Guarda el resultado en `specs/001-banking-api/spec.md`.
-
 ---
 
 # Parte 4 — Generar el Plan Técnico (1:20–1:50)
 
 **¿Qué es?** Traduce la especificación a decisiones técnicas (arquitectura, patrones, frameworks). Le dice a Copilot *cómo* construirlo.
+
+### Instrucciones en la interfaz de Copilot:
+1. Asegúrate de estar en el paso `/speckit.plan` (seleccionado desde el menú anterior o escribiéndolo manualmente).
+2. Pega el **Prompt sugerido** y presiona **Enviar**.
+3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/plan.md`. Haz clic en **"Apply in Editor"** y guarda.
+4. **Siguiente paso:** En el menú desplegable, selecciona **"Build Tasks"**.
 
 ### Prompt sugerido:
 ```text
@@ -250,13 +275,17 @@ Restricciones técnicas:
 - Pruebas unitarias con xUnit.
 ```
 
-**Verificación:** Guarda el resultado en `specs/001-banking-api/plan.md`.
-
 ---
 
 # Parte 5 — Generar Tasks (1:50–2:10)
 
 **¿Qué es?** Divide el plan técnico en pasos accionables y pequeños. Esto evita que la IA se abrume y cometa errores al intentar generar todo el proyecto de una vez.
+
+### Instrucciones en la interfaz de Copilot:
+1. Usa el comando `/speckit.tasks` (o continúa desde el menú desplegable anterior).
+2. Pega el **Prompt sugerido** y presiona **Enviar**.
+3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/tasks.md` con el backlog. Haz clic en **"Apply in Editor"** y guarda.
+4. **Siguiente paso:** En el menú desplegable, selecciona **"Implement"**.
 
 ### Prompt sugerido:
 ```text
@@ -264,19 +293,19 @@ Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso p
 Las tareas deben ser secuenciales, comenzando por la creación de la solución y el proyecto .NET, seguido de los modelos, repositorios, servicios y finalmente los controladores.
 ```
 
-**Verificación:** Guarda el resultado en `specs/001-banking-api/tasks.md`.
-
 ---
 
 # Parte 6 — Implementación con Copilot (2:10–2:45)
 
 **¿Qué es?** El momento de codificar. Iremos tomando tarea por tarea del `tasks.md` y le pediremos a Copilot Chat que genere el código.
 
-### Flujo de trabajo:
-1. Selecciona la Tarea 1 (ej. "Crear proyecto .NET").
-2. Pide a Copilot: `@workspace Implementa la Tarea 1 del archivo tasks.md respetando la constitución y el plan técnico.`
-3. Revisa el código generado, aplícalo y verifica que compile.
-4. Repite para las siguientes tareas (Modelos, Repositorio en memoria, Servicios, Controladores).
+### Instrucciones en la interfaz de Copilot:
+1. Usa el comando `/speckit.implement` o simplemente `@workspace`.
+2. **Creación de archivos:** A diferencia de los pasos anteriores donde se creaba un solo archivo Markdown, aquí Copilot generará código fuente real (`.cs`, `.csproj`) dentro de la carpeta `src/BankingApi/`.
+3. **Flujo de trabajo iterativo:**
+   - Pide a Copilot: `@workspace Implementa la Tarea 1 del archivo tasks.md respetando la constitución y el plan técnico.`
+   - Revisa el código generado, haz clic en **"Apply in Editor"** para los archivos correspondientes y verifica que compile.
+   - Repite para las siguientes tareas (Modelos, Repositorio en memoria, Servicios, Controladores).
 
 *Tip: Asegúrate de que Copilot genere el "Seed Data" en el repositorio en memoria para tener cuentas con saldo inicial (ej. ACC-001 con $1000).*
 
