@@ -59,14 +59,14 @@ flowchart TD
 
 ## Comandos de Spec Kit en orden
 
-| Paso | Comando | Propósito |
-|---:|---|---|
-| 1 | `specify init . --ai copilot` | Inicializar el repositorio con Spec Kit y configurar para GitHub Copilot |
-| 2 | `/speckit.constitution` | Crear la constitución del proyecto (reglas globales y estándares) |
-| 3 | `/speckit.specify` | Generar la especificación funcional (QUÉ debe hacer el sistema) |
-| 4 | `/speckit.plan` | Crear el plan técnico (CÓMO se implementará la solución) |
-| 5 | `/speckit.tasks` | Generar el backlog de tareas accionables paso a paso |
-| 6 | `/speckit.implement` | Implementar el código basado en las especificaciones y tareas |
+| Paso | Comando | Propósito | Ejemplo de indicaciones |
+|---:|---|---|---|
+| 1 | `specify init . --ai copilot` | Inicializar el repositorio con Spec Kit y configurar para GitHub Copilot. Crea las carpetas `.specify/` y `specs/` con la configuración base. | Terminal: Ejecutar en la raíz del proyecto antes de comenzar |
+| 2 | `/speckit.constitution` | Crear la constitución del proyecto: reglas globales, estándares de código, políticas de seguridad, arquitectura y Definition of Done. Actúa como la "ley fundamental" del proyecto. | Indicar: Política de idioma, estructura de carpetas, estándares C# (SOLID, Clean Code), requisitos de logging, validaciones obligatorias, configuración de pruebas |
+| 3 | `/speckit.specify` | Generar la especificación funcional que define QUÉ debe hacer el sistema desde la perspectiva del negocio. Se enfoca en casos de uso y reglas de negocio, no en tecnología. | Indicar: Casos de uso principales (ej. consultar saldo, transferir), reglas de negocio (ej. no transferir si saldo insuficiente), restricciones (ej. sin DB, uso de seed data), actores involucrados |
+| 4 | `/speckit.plan` | Crear el plan técnico que traduce la especificación a decisiones de implementación: CÓMO se construirá el sistema, qué patrones, frameworks y arquitectura usar. | Indicar: Stack tecnológico (.NET 8, ASP.NET Core), patrones arquitectónicos (repositories, services), estructura de carpetas (Models, Services, Controllers), decisiones de almacenamiento (ConcurrentDictionary en memoria) |
+| 5 | `/speckit.tasks` | Generar el backlog de tareas accionables y secuenciales. Divide el plan técnico en pasos pequeños y específicos que se pueden implementar uno a uno. | Indicar: Priorización (crear proyecto primero, luego modelos, servicios, endpoints), definir número de tareas (ej. máximo 5), nivel de granularidad deseado |
+| 6 | `/speckit.implement` | Implementar el código fuente basado en las especificaciones, plan y tareas. Genera archivos `.cs`, `.csproj` y demás código necesario siguiendo las reglas establecidas. | Indicar: Tarea específica del backlog a implementar (ej. "Implementa la Tarea 1"), confirmación de ubicación de archivos (src/), solicitar pruebas unitarias si aplica |
 
 *Nota: Los comandos `/speckit.*` se ejecutan en el chat de GitHub Copilot dentro de VS Code.*
 
