@@ -221,7 +221,7 @@ Actúa como un Arquitecto de Software. Crea la constitución (reglas globales) p
 Debes incluir:
 - Política de Idioma: Todos los documentos generados deben estar en español. El código, clases, métodos y variables permanecen en inglés.
 - Estructura de Carpetas: Todo el código fuente debe ubicarse dentro de src/ en la raíz del proyecto.
-- Seguridad OWASP obligatoria.
+- Seguridad: Este es un laboratorio de aprendizaje SIN autenticación, SIN autorización y SIN HTTPS. Enfocarse en la lógica de negocio únicamente.
 - Logging estructurado con Correlation ID para trazabilidad.
 - Validaciones estrictas en el dominio (ej. transferencias).
 - Estándares de código C# (Clean Code, SOLID).
