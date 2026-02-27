@@ -137,9 +137,9 @@ Al finalizar el laboratorio, tu proyecto se verá así:
 
 ```text
 banking-speckit-dotnet-lab/
-├─ .github/
-│  └─ copilot-instructions.md <-- Instrucciones personalizadas (Español)
 ├─ .specify/                 <-- Contexto global para Copilot
+│  └─ memory/
+│     └─ project.md          <-- Memoria persistente (Idioma)
 ├─ specs/
 │  └─ 001-banking-api/
 │     ├─ spec.md             <-- Requerimientos de negocio
@@ -180,14 +180,18 @@ git init
 code .
 ```
 
-## Paso 4. Configurar Copilot en Español (Custom Instructions)
-Para asegurar que todo el código, comentarios y documentación generada por Copilot sea estrictamente en español, crearemos un archivo de instrucciones personalizadas.
+## Paso 4. Configurar el Idioma Persistente (Memoria PRO)
+Para asegurar que Spec Kit genere la documentación en español pero mantenga el código en inglés (estándar de la industria), crearemos una regla en la memoria persistente del proyecto.
 
-```bash
-mkdir .github
-echo "Responde siempre en español. Genera toda la documentación, comentarios de código y explicaciones en español. Usa estándares profesionales." > .github/copilot-instructions.md
+Crea el archivo `.specify/memory/project.md` y agrega lo siguiente:
+
+```markdown
+## Language Policy
+- All human-readable documentation MUST be generated in Spanish.
+- Source code MUST remain in English.
+- API routes and identifiers remain in English.
 ```
-*Nota: VS Code y Copilot leerán automáticamente este archivo para ajustar su comportamiento en todo el workspace.*
+*Nota: Esto actúa como memoria permanente del agente para todo el repositorio.*
 
 ---
 
@@ -205,9 +209,15 @@ echo "Responde siempre en español. Genera toda la documentación, comentarios d
 
 ### Prompt sugerido:
 ```text
+IMPORTANTE — IDIOMA:
+- Genera toda la documentación en español.
+- Mantén el código fuente en inglés.
+- Mantén nombres técnicos en inglés (clases, métodos, endpoints).
+
 Actúa como un Arquitecto de Software. Crea la constitución (reglas globales) para una REST API bancaria empresarial en .NET.
 
 Debes incluir:
+- Política de Idioma: Todos los documentos generados deben estar en español. El código, clases, métodos y variables permanecen en inglés.
 - Seguridad OWASP obligatoria.
 - Logging estructurado con Correlation ID para trazabilidad.
 - Validaciones estrictas en el dominio (ej. transferencias).
@@ -231,6 +241,11 @@ Debes incluir:
 
 ### Prompt sugerido:
 ```text
+IMPORTANTE — IDIOMA:
+- Genera toda la documentación en español.
+- Mantén el código fuente en inglés.
+- Mantén nombres técnicos en inglés (clases, métodos, endpoints).
+
 Crea la especificación funcional (spec.md) de una Banking REST API.
 
 El sistema debe permitir:
@@ -264,6 +279,11 @@ Restricciones del laboratorio:
 
 ### Prompt sugerido:
 ```text
+IMPORTANTE — IDIOMA:
+- Genera toda la documentación en español.
+- Mantén el código fuente en inglés.
+- Mantén nombres técnicos en inglés (clases, métodos, endpoints).
+
 Basado en la especificación anterior, crea el plan técnico (plan.md) para la Banking REST API.
 
 Restricciones técnicas:
@@ -289,6 +309,11 @@ Restricciones técnicas:
 
 ### Prompt sugerido:
 ```text
+IMPORTANTE — IDIOMA:
+- Genera toda la documentación en español.
+- Mantén el código fuente en inglés.
+- Mantén nombres técnicos en inglés (clases, métodos, endpoints).
+
 Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso para implementar la API. 
 Las tareas deben ser secuenciales, comenzando por la creación de la solución y el proyecto .NET, seguido de los modelos, repositorios, servicios y finalmente los controladores.
 ```
