@@ -119,12 +119,6 @@ Validar: `python --version`
 
 ### 6. Instalar Spec Kit (Specify CLI)
 
-**Opción A — pip**
-```bash
-pip install specify-cli
-```
-
-**Opción B — uv (recomendada)**
 UV: https://github.com/astral-sh/uv
 ```bash
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
