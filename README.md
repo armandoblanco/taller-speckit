@@ -210,7 +210,7 @@ Crea el archivo `.specify/memory/project.md` y agrega lo siguiente:
 3. Escribe el comando `/speckit.constitution` en la caja de texto.
 4. Pega el **Prompt sugerido** (abajo) y presiona **Enviar**.
 5. **Creación del archivo:** Copilot procesará la solicitud y te mostrará una vista previa de los cambios para el archivo `.specify/memory/constitution.md`. Haz clic en **"Apply in Editor"** (Aplicar en el editor) y luego guarda el archivo (`Ctrl+S` / `Cmd+S`).
-6. **Siguiente paso:** En la parte inferior de la respuesta de Copilot, verás un menú desplegable que dice **"PROCEED FROM SPECKIT.CONSTITUTION"**. Selecciona **"Build Specification"** para avanzar a la siguiente fase de forma fluida.
+
 
 ### Prompt sugerido:
 ```text
@@ -247,7 +247,6 @@ Debes incluir:
 1. Si seleccionaste **"Build Specification"** en el paso anterior, el chat ya estará listo. Si no, escribe el comando `/speckit.specify`.
 2. Pega el **Prompt sugerido** y presiona **Enviar**.
 3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/spec.md`. Revisa el contenido, haz clic en **"Apply in Editor"** y guarda el archivo.
-4. **Siguiente paso:** En el menú desplegable **"PROCEED FROM SPECKIT.SPECIFY"**, selecciona **"Build Plan"**.
 
 ### Prompt sugerido:
 ```text
@@ -287,7 +286,6 @@ Restricciones del laboratorio:
 1. Asegúrate de estar en el paso `/speckit.plan` (seleccionado desde el menú anterior o escribiéndolo manualmente).
 2. Pega el **Prompt sugerido** y presiona **Enviar**.
 3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/plan.md`. Haz clic en **"Apply in Editor"** y guarda.
-4. **Siguiente paso:** En el menú desplegable, selecciona **"Build Tasks"**.
 
 ### Prompt sugerido:
 ```text
@@ -321,7 +319,6 @@ Restricciones técnicas para acelerar el desarrollo:
 1. Usa el comando `/speckit.tasks` (o continúa desde el menú desplegable anterior).
 2. Pega el **Prompt sugerido** y presiona **Enviar**.
 3. **Creación del archivo:** Copilot generará el archivo `specs/001-banking-api/tasks.md` con el backlog. Haz clic en **"Apply in Editor"** y guarda.
-4. **Siguiente paso:** En el menú desplegable, selecciona **"Implement"**.
 
 ### Prompt sugerido:
 ```text
