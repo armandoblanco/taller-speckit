@@ -1,4 +1,4 @@
-# Workshop Hands-On Lab (3 horas)
+# Workshop Hands-On Lab (2 horas)
 
 ## GitHub Spec Kit + GitHub Copilot
 
@@ -89,20 +89,20 @@ flowchart TD
 
 ---
 
-## 3. Agenda detallada (3 horas)
+## 3. Agenda detallada (2 horas)
 
 | Tiempo | Actividad | Objetivo |
 |--------|-----------|---------|
-| 0:00–0:15 | Introducción | Alinear el enfoque Spec-Driven Development y el escenario bancario. |
-| 0:15–0:30 | Setup + Inicialización | Tener el repositorio listo con Spec Kit y Copilot funcionando. |
-| 0:30–0:50 | Constitución | Definir reglas no negociables (seguridad, calidad, testing, auditoría). |
-| 0:50–1:10 | Especificación (Spec) | Definir QUÉ debe hacer la API: reglas de negocio y casos de uso. |
-| 1:10–1:20 | Clarificación | Validar ambigüedades en la especificación antes de planificar. |
-| 1:20–1:45 | Plan técnico (Plan) | Definir CÓMO implementarlo: arquitectura en memoria. |
-| 1:45–1:55 | Análisis de consistencia | Verificar alineación entre spec, plan y futuros tasks. |
-| 1:55–2:10 | Backlog (Tasks) | Convertir el plan técnico en tareas accionables. |
-| 2:10–2:45 | Implementación | Generar, revisar y refinar el código con Copilot. |
-| 2:45–3:00 | Demo + Cierre | Ejecutar la API y probar los endpoints. |
+| 0:00–0:10 | Introducción | Alinear el enfoque Spec-Driven Development y el escenario bancario. |
+| 0:10–0:20 | Setup + Inicialización | Tener el repositorio listo con Spec Kit y Copilot funcionando. |
+| 0:20–0:35 | Constitución | Definir reglas no negociables (seguridad, calidad, testing). |
+| 0:35–0:50 | Especificación (Spec) | Definir QUÉ debe hacer la API: reglas de negocio y casos de uso. |
+| 0:50–0:55 | Clarificación | Validar ambigüedades en la especificación antes de planificar. |
+| 0:55–1:10 | Plan técnico (Plan) | Definir CÓMO implementarlo: arquitectura en memoria. |
+| 1:10–1:15 | Análisis de consistencia | Verificar alineación entre spec, plan y futuros tasks. |
+| 1:15–1:25 | Backlog (Tasks) | Convertir el plan técnico en tareas accionables. |
+| 1:25–1:50 | Implementación | Generar, revisar y refinar el código con Copilot. |
+| 1:50–2:00 | Demo + Cierre | Ejecutar la API y probar los endpoints. |
 
 ---
 
@@ -204,7 +204,7 @@ banking-speckit-dotnet-lab/
 
 ---
 
-## Parte 1 — Inicialización del proyecto (0:15–0:30)
+## Parte 1 — Inicialización del proyecto (0:10–0:20)
 
 ### Paso 1. Crear carpeta
 
@@ -241,14 +241,14 @@ Para asegurar que Spec Kit genere la documentación en español pero mantenga el
 
 ---
 
-## Parte 2 — Crear la Constitución (0:30–0:50)
+## Parte 2 — Crear la Constitución (0:20–0:35)
 
 **¿Qué es?** La constitución define las reglas de juego globales. Es el documento que Copilot leerá para saber qué estándares de código, arquitectura y seguridad debe respetar en todo momento. Se guarda en `.specify/memory/constitution.md`.
 
 ### Instrucciones en la interfaz de Copilot
 
 1. Abre el panel de **GitHub Copilot Chat** en VS Code.
-2. En el selector de modelos (parte superior del chat), elige **Claude 3.7 Sonnet** o **GPT-4o** para obtener el mejor razonamiento arquitectónico.
+2. En el selector de modelos (parte superior del chat), elige **Claude Sonnet 4.5** para los pasos de especificación y planificación, o **Claude Opus 4.5** si quieres mayor profundidad en el razonamiento arquitectónico.
 3. Escribe `/speckit.constitution` en la caja de texto.
 4. Pega el prompt sugerido y presiona **Enter**.
 5. Copilot te mostrará una vista previa del archivo `.specify/memory/constitution.md`. Haz clic en **"Apply in Editor"** y guarda (`Ctrl+S` / `Cmd+S`).
@@ -265,25 +265,29 @@ IMPORTANTE — ESTRUCTURA DEL PROYECTO:
 - Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
 - La estructura del proyecto debe ser: src/BankingApi/
 
+IMPORTANTE — SIMPLICIDAD (PRIORIDAD MÁXIMA):
+- Prioriza la generación de código funcional por encima de la perfección arquitectónica.
+- Genera la solución más simple posible. 
+- NO uses interfaces innecesarias. Los servicios serán clases concretas directas.
+- NO apliques patrones que no sean estrictamente necesarios
+- Mínimo número de archivos. Prefiere consolidar en menos archivos con más contenido.
+- El código debe compilar y ejecutarse en el primer intento, sin configuración adicional.
+
 Actúa como un Arquitecto de Software. Crea la constitución (reglas globales) para
-una REST API bancaria empresarial en .NET.
+una REST API bancaria en .NET orientada a un laboratorio.
 
 Debes incluir:
-- Política de Idioma: Documentos en español. Código, clases, métodos y variables en inglés.
-- Estructura de Carpetas: Todo el código fuente dentro de src/ en la raíz del proyecto.
-- Seguridad: Laboratorio de aprendizaje SIN autenticación, SIN autorización y SIN HTTPS.
-  Enfocarse en la lógica de negocio únicamente.
-- Logging estructurado con Correlation ID para trazabilidad.
-- Validaciones estrictas en el dominio (ej. transferencias).
-- Estándares de código C# (Clean Code, SOLID).
-- Pruebas unitarias obligatorias.
+- Seguridad: SIN autenticación, SIN autorización y SIN HTTPS. Solo lógica de negocio.
+- Validaciones de dominio básicas (ej. transferencias con saldo insuficiente).
+- Estándares de código C# mínimos: nombres descriptivos, sin código muerto.
+- Una prueba unitaria por regla de negocio crítica, sin mocks complejos.
 - Swagger habilitado para documentación.
-- Definition of Done (DoD) clara.
+- Definition of Done (DoD) breve: compila, ejecuta, responde correctamente.
 ```
 
 ---
 
-## Parte 3 — Crear la Especificación (0:50–1:10)
+## Parte 3 — Crear la Especificación (0:35–0:50)
 
 **¿Qué es?** Traduce los requerimientos del negocio a un formato estructurado. Aquí no hablamos de código, sino de casos de uso y reglas de negocio. Se guarda en `specs/001-banking-api/spec.md`.
 
@@ -303,6 +307,12 @@ IMPORTANTE — IDIOMA:
 IMPORTANTE — ESTRUCTURA DEL PROYECTO:
 - Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
 
+IMPORTANTE — SIMPLICIDAD (PRIORIDAD MÁXIMA):
+- Genera una especificación concisa. Sin casos de uso secundarios ni extensiones.
+- SOLO los 2 flujos indicados: consulta de saldo y transferencia.
+- No incluir autenticación, paginación, historial, ni ninguna funcionalidad extra.
+- Cada regla de negocio debe poderse implementar en menos de 10 líneas de código.
+
 Crea la especificación funcional (spec.md) de una Banking REST API minimalista.
 
 El sistema debe permitir SOLO 2 operaciones:
@@ -317,13 +327,14 @@ Reglas de negocio estrictas:
 Restricciones del laboratorio:
 - API REST muy simple (MVP).
 - Sin base de datos (almacenamiento en memoria).
-- Datos semilla (seed data) al iniciar la aplicación con al menos 3 cuentas pre-cargadas
-  (ej. ACC-001 con $1000, ACC-002 con $500, ACC-003 con $0) para poder probar inmediatamente.
+- Datos semilla (seed data) al iniciar: 3 cuentas pre-cargadas
+  (ACC-001 con $1000, ACC-002 con $500, ACC-003 con $0).
+- Respuestas de error en formato JSON simple: { "error": "mensaje" }.
 ```
 
 ---
 
-## Parte 4 — Clarificación de requerimientos (1:10–1:20)
+## Parte 4 — Clarificación de requerimientos (0:50–0:55)
 
 **¿Qué es?** Antes de generar el plan técnico, este paso valida que no existan ambigüedades en la especificación. Evita retrabajos en las fases de diseño e implementación.
 
@@ -344,7 +355,7 @@ Restricciones del laboratorio:
 
 ---
 
-## Parte 5 — Generar el Plan Técnico (1:20–1:45)
+## Parte 5 — Generar el Plan Técnico (0:55–1:10)
 
 **¿Qué es?** Traduce la especificación a decisiones técnicas: arquitectura, patrones, frameworks. Se guarda en `specs/001-banking-api/plan.md`.
 
@@ -365,22 +376,27 @@ IMPORTANTE — ESTRUCTURA DEL PROYECTO:
 - Todo el código fuente DEBE ubicarse en la carpeta src/ en la raíz del repositorio.
 - La estructura del proyecto debe ser: src/BankingApi/
 
+IMPORTANTE — SIMPLICIDAD (PRIORIDAD MÁXIMA):
+- Elige el enfoque técnico más simple posible. Minimal APIs sobre Controllers si reduce
+  archivos. Un solo proyecto, sin soluciones multi-proyecto.
+- NO generes interfaces para servicios. Usa clases concretas directamente en el DI container.
+- NO uses AutoMapper, FluentValidation, ni ninguna librería de terceros. Solo el SDK base.
+- Documenta exactamente cuántos archivos se crearán (debe ser 5 o menos en src/).
+
 Basado en la especificación anterior, crea el plan técnico (plan.md) para la Banking REST API.
 
 Restricciones técnicas:
-- .NET 9 Web API con ASP.NET Core (Minimal APIs o Controllers simples).
-- El proyecto debe crearse en la carpeta src/BankingApi/
-- SIN BASE DE DATOS: Usar un servicio Singleton en memoria con ConcurrentDictionary para
-  almacenar los saldos.
-- Arquitectura simplificada: Un solo proyecto separando lógicamente en carpetas
-  (Models, Services, Controllers).
-- Swagger habilitado.
-- Pruebas unitarias básicas con xUnit solo para el servicio de transferencias.
+- .NET 9 Web API con ASP.NET Core Minimal APIs (no Controllers).
+- El proyecto se crea en la carpeta src/BankingApi/
+- SIN BASE DE DATOS: Servicio Singleton en memoria con ConcurrentDictionary.
+- Arquitectura plana: Models, Services y endpoints en Program.cs o máximo 3 archivos .cs.
+- Swagger habilitado con Swashbuckle.
+- Una clase de prueba xUnit para las 3 reglas de negocio de transferencia. Sin mocks.
 ```
 
 ---
 
-## Parte 6 — Análisis de consistencia (1:45–1:55)
+## Parte 6 — Análisis de consistencia (1:10–1:15)
 
 **¿Qué es?** Valida que spec, plan y las futuras tareas sean consistentes entre sí antes de generar el código. Detecta gaps o contradicciones antes de invertir tiempo en implementación.
 
@@ -398,7 +414,7 @@ Restricciones técnicas:
 
 ---
 
-## Parte 7 — Generar Tasks (1:55–2:10)
+## Parte 7 — Generar Tasks (1:15–1:25)
 
 **¿Qué es?** Divide el plan técnico en pasos accionables y pequeños. Se guarda en `specs/001-banking-api/tasks.md`.
 
@@ -415,20 +431,27 @@ IMPORTANTE — IDIOMA:
 - Genera toda la documentación en español.
 - Mantén el código fuente en inglés.
 
-Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso
-para implementar la API. Mantén el número de tareas al mínimo indispensable (máximo 5 tareas).
+IMPORTANTE — SIMPLICIDAD (PRIORIDAD MÁXIMA):
+- Máximo 4 tareas. Menos es mejor.
+- Cada tarea debe poder completarse en 5 minutos de generación con Copilot.
+- No generes tareas de configuración, CI/CD, logging avanzado ni Docker.
+- Las pruebas van incluidas en la misma tarea que el servicio, no como tarea separada.
 
-Las tareas deben ser secuenciales:
-1. Crear proyecto Web API y xUnit.
-2. Crear modelos de datos (Account, TransferRequest).
-3. Crear el servicio en memoria con Seed Data (cuentas de prueba).
-4. Crear los endpoints para consultar saldo y transferir.
-5. Escribir pruebas unitarias para la lógica de transferencia.
+Basado en el plan técnico, genera un backlog de tareas (tasks.md) paso a paso
+para implementar la API.
+
+Las tareas deben ser secuenciales y completas:
+1. Crear el proyecto Web API (.NET 9) y el proyecto xUnit en src/BankingApi/.
+2. Crear los modelos Account y TransferRequest, más el BankingService en memoria con Seed Data
+   y sus pruebas unitarias.
+3. Registrar el BankingService como Singleton y definir los 2 endpoints Minimal API
+   en Program.cs (GET /accounts/{id} y POST /transfers).
+4. Habilitar Swagger y validar que la API arranca y responde correctamente.
 ```
 
 ---
 
-## Parte 8 — Implementación con Copilot (2:10–2:45)
+## Parte 8 — Implementación con Copilot (1:25–1:50)
 
 **¿Qué es?** El momento de codificar. Se toman las tareas del `tasks.md` y se le pide a Copilot Chat que genere el código tarea por tarea.
 
@@ -445,7 +468,7 @@ Las tareas deben ser secuenciales:
 
 ---
 
-## Parte 9 — Ejecutar la API (2:45–3:00)
+## Parte 9 — Ejecutar la API (1:50–2:00)
 
 ### Restaurar y compilar
 
@@ -539,7 +562,7 @@ Usa el flag `--force` para sobrescribir en un directorio con contenido existente
 ---
 
 **Autor:** Armando Blanco
-**Duración:** 3 horas
+**Duración:** 2 horas
 **Nivel:** Intermedio
 **Modalidad:** Hands-On Lab público
 **Spec Kit version:** v0.7.0
